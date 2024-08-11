@@ -10,7 +10,7 @@ app.post('/sendMessage', authMiddleware,asyncHandler(async (req, res) => {
 }))
 
 app.get("/ping", (req, res) => {
-  res.send("pong")
+  res.json({ message: "pong" })
 })
 
 app.listen(port, () => {
