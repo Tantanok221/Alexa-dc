@@ -1,28 +1,14 @@
-import { TextChannel } from "discord.js";
-import { initDiscord } from "./client/discord";
-import dotenv from "dotenv";
-import { getMessage } from "./helper/getMessage";
+import { sendMessage } from "./api";
+import express from "express";
+import asyncHandler from "express-async-handler";
+import { authMiddleware } from "./middleware/auth.middleware";
+const app = express()
+const port = 3002
 
-async function main() {
-  console.log("Starting bot");
+app.post('/sendMessage', authMiddleware,asyncHandler(async (req, res) => {
+  res.send(await sendMessage())
+}))
 
-  dotenv.config();
-  const channelId = process.env.CHANNEL_ID;
-  if (!channelId) {
-    console.error("CHANNEL_ID is not set");
-    process.exit(1);
-  }
-  const client = initDiscord();
-  const message = await getMessage();
-  client.on("ready", async () => {
-    const channel = (await client.channels.fetch(
-      channelId
-    )) as TextChannel | null;
-    if (channel) {
-      // console.log(message)
-      channel.send(message);
-    }
-  });
-}
-
-main();
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
