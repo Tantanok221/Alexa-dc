@@ -3,7 +3,7 @@ import { initDiscord } from "./client/discord";
 import dotenv from "dotenv";
 import { getMessage } from "./helper/getMessage";
 
-function main() {
+async function main() {
   console.log("Starting bot");
 
   dotenv.config();
@@ -13,17 +13,16 @@ function main() {
     process.exit(1);
   }
   const client = initDiscord();
-  setTimeout(async() => {
-    const message = await getMessage()
-    client.on("ready", async () => {
-      const channel = (await client.channels.fetch(
-        channelId
-      )) as TextChannel | null;
-      if (channel) {
-        channel.send(message);
-      }
-    });
-  },50)
+  const message = await getMessage();
+  client.on("ready", async () => {
+    const channel = (await client.channels.fetch(
+      channelId
+    )) as TextChannel | null;
+    if (channel) {
+      // console.log(message)
+      channel.send(message);
+    }
+  });
 }
 
-main()
+main();

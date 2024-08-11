@@ -1,24 +1,25 @@
-import { fetchAll } from "src/db/fetch"
-import { getHowManyMonth } from "./getHowManyMonth"
-
+import { fetchAll } from "src/db/fetch";
+import { differenceInMonths, isSameMonth } from "date-fns";
 export async function getMessage() {
   try {
-    const data = await fetchAll()
+    const data = await fetchAll();
     const message = data
       .map((user) => {
-        const months = getHowManyMonth(user.expiresAt, new Date())
-        if (months > 0) {
-          return `${user.name} hasn't paid for ${months} months, the bill is ${months * 5}`
+        let months = differenceInMonths(new Date(), user.expiresAt);
+        if (isSameMonth(new Date(), user.expiresAt)) {
+          months++;
         }
-        return null
+        if (months > 0) {
+          return `<@${user.discordId}> 已經 ${months} 個月沒給錢了 , 總共 ${months * 5}`;
+        }
+        return null;
       })
       .filter(Boolean)
-      .join("\n")
-    
-  
-    return message
+      .join("\n");
+
+    return message;
   } catch (error) {
-    console.error(error)
-    return "An error occurred while fetching messages"
+    console.error(error);
+    return "An error occurred while fetching messages";
   }
 }
