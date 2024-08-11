@@ -46,6 +46,7 @@ module.exports = {
         "no-cond-assign": ["error", "always"],
         eqeqeq: ["error"],
         "no-constant-binary-expression": "error",
+        "arrow-body-style": ["never"],
         curly: "error",
         "default-case": "error",
         "default-case-last": "error",
