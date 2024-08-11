@@ -3,7 +3,7 @@ import express from "express";
 import asyncHandler from "express-async-handler";
 import { authMiddleware } from "./middleware/auth.middleware";
 const app = express()
-const port = 3002
+const port = process.env.PORT || 3002;
 
 app.post('/sendMessage', authMiddleware,asyncHandler(async (req, res) => {
   res.send(await sendMessage())
