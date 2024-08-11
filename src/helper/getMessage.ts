@@ -10,7 +10,7 @@ export async function getMessage() {
           months++;
         }
         if (months > 0) {
-          return `<@${user.discordId}> 已經 ${months} 個月沒給錢了 , 總共 ${months * 5}`;
+          return `<@${user.discordId}> 已經 ${months} 個月沒給錢了, 快給錢R ┬─┬ ノ( ゜-゜ノ) `;
         }
         return null;
       })
