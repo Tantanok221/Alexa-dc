@@ -1,20 +1,28 @@
-#!/usr/bin/env node
-// NOTE: You can remove the first line if you don't plan to release an
-// executable package. E.g. code that can be used as cli like prettier or eslint
+import { TextChannel } from "discord.js";
+import { initDiscord } from "./client/discord";
+import dotenv from "dotenv";
 
-const main = () => {
-  console.log("hello Node.js and Typescript world :]");
-  console.log("live reloading");
-  console.log("live reloading2");
-};
+function main() {
+  console.log("Starting bot");
+  
+  dotenv.config();
+  const channelId = process.env.CHANNEL_ID;
+  if (!channelId) {
+    console.error("CHANNEL_ID is not set");
+    process.exit(1);
+  }
+  const client = initDiscord();
+  client.on("ready", async () => {
+    const channel = (await client.channels.fetch(
+      channelId
+    )) as TextChannel | null;
+    if (channel) {
+    }
+  });
+}
 
-// This was just here to force a linting error for now to demonstrate/test the
-// eslint pipeline. You can uncomment this and run "yarn lint:check" to test the
-// linting.
-// const x: number[] = [1, 2];
-// const y: Array<number> = [3, 4];
-// if (x == y) {
-//   console.log("equal!");
-// }
 
 main();
+
+
+  
