@@ -6,4 +6,7 @@ export async function fetchAll(){
   return data
 }
 
-
+export async function fetchName(){
+  const data = await prisma.spotifyUser.findMany({select: {name: true}})
+  return data
+}
