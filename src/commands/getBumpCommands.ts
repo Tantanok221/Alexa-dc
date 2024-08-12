@@ -28,17 +28,19 @@ export async function getBumpCommands() {
       option
         .setName("wallet")
         .setDescription("The wallet that are affected after the bump")
+        .addChoices([
+          { name: "cash", value: "cash" },
+          { name: "tng", value: "tng" },
+        ])
+        .setRequired(true)
     );
   return {
     data: bumpCommand,
     async execute(interaction: ChatInputCommandInteraction) {
       const id = interaction.options.getString("name") as string;
       const month = interaction.options.getInteger("month") as number;
-      let wallet = interaction.options.getString("wallet");
-      if (!wallet) {
-        wallet = "touchngo";
-      }
-      const success = await BumpData(id, month);
+      let wallet = interaction.options.getString("wallet") as "cash" | "tng" ;
+      const success = await BumpData(id, month, wallet);
       if (!success) {
         await interaction.reply({ content: "User not found", ephemeral: true });
       } else {
