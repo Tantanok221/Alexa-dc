@@ -13,7 +13,7 @@ export async function sendMessage() {
     console.error("CHANNEL_ID is not set");
     process.exit(1);
   }
-  const client = initDiscord();
+  const {client} = initDiscord();
   const message = await getMessage();
   client.on("ready", async () => {
     const channel = (await client.channels.fetch(
