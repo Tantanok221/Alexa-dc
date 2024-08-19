@@ -58,6 +58,7 @@ app.post(
 
 
 app.get("/ping", (req, res) => {
+  const dc = initDiscord() 
   res.json({ message: "pong" });
 });
 
