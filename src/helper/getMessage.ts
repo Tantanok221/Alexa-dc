@@ -1,12 +1,12 @@
 import { fetchAll } from "src/db/fetch";
-import { differenceInMonths, isSameMonth } from "date-fns";
+import { differenceInMonths, isSameMonth, subMonths } from 'date-fns';
 export async function getMessage() {
   try {
     const data = await fetchAll();
     const message = data
       .map((user) => {
-        let months = differenceInMonths(new Date(), user.expiresAt);
-        if (isSameMonth(new Date(), user.expiresAt)) {
+        let months = differenceInMonths(new Date(), subMonths(user.expiresAt,1));
+        if (isSameMonth(new Date(), user.expiresAt )) {
           months++;
         }
         if (months > 0) {
