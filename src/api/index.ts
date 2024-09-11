@@ -15,14 +15,12 @@ export async function sendMessage() {
   }
   const {client} = initDiscord();
   const message = await getMessage();
-  client.on("ready", async () => {
-    const channel = (await client.channels.fetch(
-      channelId
-    )) as TextChannel | null;
-    if (channel) {
-      // console.log(message)
-      channel.send(message);
-    }
-  });
+  const channel = (await client.channels.fetch(
+    channelId
+  )) as TextChannel | null;
+  if (channel) {
+    // console.log(message)
+    channel.send(message);
+  };
   return message
 }
