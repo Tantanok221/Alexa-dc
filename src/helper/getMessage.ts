@@ -6,13 +6,10 @@ export async function getMessage() {
     const message = data
       .map((user) => {
         let months = differenceInMonths(new Date(), subMonths(user.expiresAt,1));
-        if (isSameMonth(new Date(), user.expiresAt )) {
-          months++;
-        }
-        if (months > 0) {
+        console.log(months,user.name)
+        if(months > 0){
           return `<@${user.discordId}> 已經 ${months} 個月沒給Spotify的錢了 `;
         }
-        return null;
       })
       .filter(Boolean)
       .join("\n");
